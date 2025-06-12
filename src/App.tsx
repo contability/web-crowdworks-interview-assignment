@@ -1,5 +1,11 @@
+import PdfViewer from "./pdf-viewer";
+
 function App() {
-  return <div className=" text-blue-700">TEST</div>;
+  return (
+    <main>
+      <PdfViewer />
+    </main>
+  );
 }
 
 export default App;
