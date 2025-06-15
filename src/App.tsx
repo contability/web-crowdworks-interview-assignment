@@ -63,18 +63,12 @@ function App() {
   return (
     <main className="flex h-dvh">
       <PdfViewer
-        displayableTextItems={report.texts.filter(
-          (item) =>
-            item.prov &&
-            item.prov.length > 0 &&
-            item.text &&
-            ["section_header", "paragraph", "list_item"].includes(item.label)
-        )}
         selectedItem={selectedItem}
         hoveredItem={hoveredItem}
         setHoveredItem={setHoveredItem}
         pdfOverlaysRef={pdfOverlaysRef}
         jsonItemsRef={jsonItemsRef}
+        allContentItems={allContentItems}
       />
       <JsonViewer
         selectedItem={selectedItem}
