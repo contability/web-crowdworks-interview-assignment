@@ -80,38 +80,35 @@ const JsonViewer = ({
   }, [allContentItems]);
 
   // 콘텐츠 타입에 따라 적절한 렌더러 컴포넌트 사용
-  const renderContentItem = useCallback(
-    (item: ContentItem) => {
-      if (isTextItem(item)) {
-        return <TextRenderer key={`json-item-${item.self_ref}`} text={item} />;
-      }
+  const renderContentItem = useCallback((item: ContentItem) => {
+    if (isTextItem(item)) {
+      return <TextRenderer key={`json-text__${item.self_ref}`} text={item} />;
+    }
 
-      if (isTableItem(item)) {
-        return (
-          <TableRenderer key={`json-table-${item.self_ref}`} table={item} />
-        );
-      }
+    if (isTableItem(item)) {
+      return (
+        <TableRenderer key={`json-table__${item.self_ref}`} table={item} />
+      );
+    }
 
-      if (isPictureItem(item)) {
-        return (
-          <ImageRenderer key={`json-image-${item.self_ref}`} image={item} />
-        );
-      }
+    if (isPictureItem(item)) {
+      return (
+        <ImageRenderer key={`json-image__${item.self_ref}`} image={item} />
+      );
+    }
 
-      if (isGroupItem(item)) {
-        return (
-          <GroupRenderer
-            key={`json-group-${item.self_ref}`}
-            group={item}
-            renderContentItem={renderContentItem}
-          />
-        );
-      }
+    if (isGroupItem(item)) {
+      return (
+        <GroupRenderer
+          key={`json-group__${item.self_ref}`}
+          group={item}
+          renderContentItem={renderContentItem}
+        />
+      );
+    }
 
-      return null;
-    },
-    [handleJsonItemClick]
-  );
+    return null;
+  }, []);
 
   return (
     <div className="overflow-y-auto p-4 border-l border-gray-300">

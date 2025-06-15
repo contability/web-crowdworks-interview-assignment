@@ -38,17 +38,7 @@ function App() {
 
     const children = group.children as { $ref: string }[];
     return children
-      .map((childRef) => {
-        const child = findItemByRef(childRef.$ref);
-        // 자식이 또 그룹이면 재귀적으로 처리
-        if (child && "name" in child && child.name === "list") {
-          return {
-            ...child,
-            resolvedChildren: resolveGroupChildren(child.self_ref),
-          } as ResolvedGroupItem;
-        }
-        return child as ContentItem;
-      })
+      .map((childRef) => findItemByRef(childRef.$ref) as ContentItem)
       .filter((item): item is ContentItem => item !== null);
   };
 
