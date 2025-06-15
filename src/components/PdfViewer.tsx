@@ -2,7 +2,7 @@ import { useState, useCallback, type Dispatch, type RefObject } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 // text layer의 위치를 잡아줌. 즉, OCR 적용된 것 처럼 만들어줌.
 import "react-pdf/dist/Page/TextLayer.css";
-import type { ReportData } from "../types";
+import type { TextItem } from "../types";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -10,11 +10,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 interface PdfViewerProps {
-  displayableTextItems: ReportData["texts"];
+  displayableTextItems: TextItem[];
   selectedItem: string | null;
   hoveredItem: string | null;
   pdfOverlaysRef: RefObject<Record<string, HTMLDivElement | null>>;
-  jsonItemsRef: RefObject<Record<string, HTMLDivElement | null>>;
+  jsonItemsRef: RefObject<Record<string, HTMLElement | null>>;
   setHoveredItem: Dispatch<React.SetStateAction<string | null>>;
 }
 
@@ -65,23 +65,6 @@ const PdfViewer = ({
   return (
     <div className="flex-1 overflow-auto bg-gray-100">
       <div className="mx-auto w-fit overflow-auto p-4">
-        <div className="mb-2 flex gap-2">
-          <button
-            onClick={handleZoomOut}
-            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-            aria-label="축소"
-          >
-            -
-          </button>
-          <button
-            onClick={handleZoomIn}
-            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-            aria-label="확대"
-          >
-            +
-          </button>
-          <span className="ml-2 text-sm">{Math.round(scale * 100)}%</span>
-        </div>
         <div>
           <Document
             file="/public/reports/1.report.pdf"
@@ -140,6 +123,23 @@ const PdfViewer = ({
               </div>
             ))}
           </Document>
+        </div>
+        <div className="mb-2 flex items-center gap-2 mx-auto w-fit">
+          <button
+            onClick={handleZoomOut}
+            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 text-2xl"
+            aria-label="축소"
+          >
+            -
+          </button>
+          <button
+            onClick={handleZoomIn}
+            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 text-2xl"
+            aria-label="확대"
+          >
+            +
+          </button>
+          <span className="ml-2 text-lg">{Math.round(scale * 100)}%</span>
         </div>
       </div>
     </div>
